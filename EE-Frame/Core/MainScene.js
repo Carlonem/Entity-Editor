@@ -468,33 +468,6 @@ export class MainScene extends Phaser.Scene {
         this.drawSelectionDot();
     }
 
-    drawGridLinesOld() {
-        // Estilo da Grade
-        this.graphics.clear();
-        if (!this.activeGrid) {
-            this.graphics.lineStyle(
-                this.lineWidth[this.currentLineInfo[0]],
-                this.lineColor[this.currentLineInfo[1]],
-                this.lineAlpha[this.currentLineInfo[2]]
-            );
-        } else {
-            this.graphics.lineStyle(1, 0x000000, 0);
-        }
-
-        // Calcula o deslocamento baseado na posição da visualização
-        const offsetX = this.viewPosition[this.currentWorkspace].x;
-        const offsetY = this.viewPosition[this.currentWorkspace].y;
-
-        // Desenhando a Grade
-        for (let x = offsetX % this.gridSize; x < this.game.config.width; x += this.gridSize) {
-            for (let y = offsetY % this.gridSize; y < this.game.config.height; y += this.gridSize) {
-                this.graphics.fillStyle(0x000000, 0);
-                this.graphics.fillRect(x, y, this.gridSize, this.gridSize);
-                this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
-            }
-        }
-    }
-
     drawGridLines() {
         // Estilo da Grade
         this.graphics.clear();
