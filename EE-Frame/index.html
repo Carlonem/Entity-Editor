@@ -1,0 +1,301 @@
+<!--
+  This file is part of Entity Editor - EE.
+
+  Entity Editor - EE is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  any later version.
+
+  Entity Editor - EE is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with Entity Editor - EE. If not, see <http://www.gnu.org/licenses/>.
+
+  Author: Carlonem <carlonem.dev@gmail.com>
+-->
+
+
+<!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EE-Frame/</title>
+        <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script> -->
+        <script src='./lib/phaser.js'></script>
+        <link rel="stylesheet" href="index.css" />
+    </head>
+
+    <body>
+        <div id="ui">
+            <h1 id="title">Entity Editor</h1>
+
+
+            <!-- Boot Div -->
+            <div class="section-boot-div">
+
+
+                <label for="canvas-resolution" class="text-labeldiv">Canvas Size and Unit Cell</label>
+
+                <div style="display: flex; width: 100%; justify-content: space-between;">
+                    <select id="canvas-resolution" style="width: 76%;">
+                        <!-- 16:9 Resolutions -->
+                        <option value="3840x2160x16:9x0x0x1">3840x2160 (4K UHD) 16:9</option>
+                        <option value="2560x1440x16:9x0x0x1">2560x1440 (QHD) 16:9</option>
+                        <option value="1920x1080x16:9x1x0x1">1920x1080 (FHD) 16:9</option>
+                        <option value="1600x900x16:9x1x0x1">1600x900 16:9</option>
+                        <option value="1366x768x16:9x1x0x1">1366x768 16:9</option>
+                        <option value="1280x720x16:9x1x0x1" selected>1280x720 (HD) 16:9</option>
+                        <option value="1024x576x16:9x1x0x1">1024x576 16:9</option>
+                        <option value="960x540x16:9x3x0x0">960x540 (qHD) 16:9</option>
+                        <option value="854x480x16:9x2x0x0">854x480 (FWVGA) 16:9</option>
+                        <option value="640x360x16:9x2x0x0">640x360 (nHD) 16:9</option>
+
+                        <!-- 4:3 Resolutions -->
+                        <option value="1600x1200x4:3x1x0x1">1600x1200 (UXGA) 4:3</option>
+                        <option value="1400x1050x4:3x1x0x1">1400x1050 (SXGA+) 4:3</option>
+                        <option value="1280x960x4:3x1x0x1">1280x960 (SXGA-) 4:3</option>
+                        <option value="1024x768x4:3x1x0x1">1024x768 (XGA) 4:3</option>
+                        <option value="800x600x4:3x2x0x0">800x600 (SVGA) 4:3</option>
+                        <option value="640x480x4:3x3x0x0">640x480 (VGA) 4:3</option>
+                        <option value="320x240x4:3x3x0x0">320x240 (QVGA) 4:3</option>
+
+                    </select>
+
+                    <select id="canvas-grid" style="width: 20%;">
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10" selected>10</option>
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="32">32</option>
+                        <option value="40">40</option>
+                        <option value="60">60</option>
+                        <option value="64">64</option>
+                    </select>
+
+                </div>
+
+                <div style="display: flex; width: 100%; justify-content: space-between;">
+                    <label for="background-load" class="file-label" style="width: 76%;">Load Background</label>
+                    <input type="file" id="background-load" />
+                    <button id="set-resolution" style="width: 20%;">Start</button>
+                </div>
+
+                <div class="section-div" style="margin-top: 20px;">
+                    <label class="text-labeldiv">Master FPS Control</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button value="10" id="fps0" style="width: 17.5%;">10</button>
+                        <button value="15" id="fps1" style="width: 17.5%;">15</button>
+                        <button value="20" id="fps2" style="width: 17.5%;">20</button>
+                        <button value="30" id="fps3" style="width: 17.5%;">30</button>
+                        <button value="60" id="fps4" style="width: 17.5%;">60</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Render Options</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button value="0" id="render-webgl" style="width: 48.3%;">WebGL</button>
+                        <button value="1" id="render-canvas" style="width: 48.3%;">Canvas</button>
+
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Orientation Options</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button value="landscape" id="orientation-landscape" style="width: 48.3%;">Landscape</button>
+                        <button value="portrait" id="orientation-portrait" style="width: 48.3%;">Portrait</button>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Main Div -->
+            <div class="section-main-div" style="display: none;">
+
+
+                <div style="display: flex; width: 100%; justify-content: space-between;">
+                    <label for="entity-name" class="text-labeldiv" style="width: 40%;">Entity Name</label>
+                    <label for="entity-real-type" class="text-labeldiv" style="width: 26%;">Type</label>
+                    <label for="entity-type" class="text-labeldiv" style="width: 25%;">Cluster</label>
+                </div>
+
+                <div style="display: flex; width: 100%; justify-content: space-between;">
+                    <input type="text" id="entity-name" style="width: 41%;" />
+                    <select id="entity-real-type" style="width: 26%;">
+                        <option value="zone" selected>Zone</option>
+                        <option value="path">Path</option>
+                    </select>
+                    <select id="entity-type" style="width: 25%;">
+                        <option value="0x00FFFF" style="background-color: #00FFFF;" selected>One</option>
+                        <option value="0x00CED1" style="background-color: #00CED1;">Two</option>
+                        <option value="0x40E0D0" style="background-color: #40E0D0;">Three </option>
+                        <option value="0x48D1CC" style="background-color: #48D1CC;">Four</option>
+                        <option value="0x20B2AA" style="background-color: #20B2AA;">Five</option>
+                        <option value="0x008B8B" style="background-color: #008B8B;">Six</option>
+                        <option value="0x008080" style="background-color: #008080;">Seven</option>
+                        <option value="0x7FFFD4" style="background-color: #7FFFD4;">Eight</option>
+                        <option value="0x66CDAA" style="background-color: #66CDAA;">Nine</option>
+                        <option value="0x5F9EA0" style="background-color: #5F9EA0;">Ten</option>
+                    </select>
+                </div>
+
+                <label for="entity-data" class="text-labeldiv">Entity Data</label>
+                <textarea id="entity-data" rows="10" class="json-viewer">{}</textarea>
+
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Main Actions</label>
+
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="save-entity" style="width: 48%;">Save Entity </button>
+                        <button id="delete-entity" style="width: 48%;">Delete Entity </button>
+                    </div>
+
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="paste-entity" style="width: 48%;">Paste Entity</button>
+                        <button id="copy-entity" style="width: 48%;">Copy Entity</button>
+                    </div>
+
+
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="move-up-entity" style="width: 48%;">Move Backward</button>
+                        <button id="move-down-entity" style="width: 48%;">Move Forward</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Copy Entity Slots</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="c0" style="width: 18%;">0</button>
+                        <button id="c1" style="width: 18%;">1</button>
+                        <button id="c2" style="width: 18%;">2</button>
+                        <button id="c3" style="width: 18%;">3</button>
+                        <button id="c4" style="width: 18%;">4</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Save State Management</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="save-state" style="width: 48%;">Save State</button>
+                        <button id="return-state" style="width: 48%;">Return State</button>
+                    </div>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="s0" style="width: 18%;">0</button>
+                        <button id="s1" style="width: 18%;">1</button>
+                        <button id="s2" style="width: 18%;">2</button>
+                        <button id="s3" style="width: 18%;">3</button>
+                        <button id="s4" style="width: 18%;">4</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Isolated Workspaces</label>
+
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="layer-one" style="width: 18%;">0</button>
+                        <button id="layer-two" style="width: 18%;">1</button>
+                        <button id="layer-three" style="width: 18%;">2</button>
+                        <button id="layer-four" style="width: 18%;">3</button>
+                        <button id="layer-five" style="width: 18%;">4</button>
+                    </div>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="layer-six" style="width: 18%;">5</button>
+                        <button id="layer-seven" style="width: 18%;">6</button>
+                        <button id="layer-eight" style="width: 18%;">7</button>
+                        <button id="layer-nine" style="width: 18%;">8</button>
+                        <button id="layer-ten" style="width: 18%;">9</button>
+                    </div>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="fast-save" style="width: 48%;">Fast Save</button>
+                        <button id="fast-load" style="width: 48%;">Fast Load</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+
+                    <label class="text-labeldiv">Canvas View</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="move-view-up" style="width: 22%;">Up</button>
+                        <button id="move-view-down" style="width: 22%;">Down</button>
+                        <button id="move-view-left" style="width: 22%;">Left</button>
+                        <button id="move-view-right" style="width: 22%;">Right</button>
+                    </div>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="move-view-multiplier" style="width: 48%;">Multiplier (1x)</button>
+                        <button id="move-view-reset" style="width: 48%;">Reset View</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+
+                    <label class="text-labeldiv">Background Options</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="bg-scale" style="width: 48%;">Scale (Normal)</button>
+                        <button id="bg-alpha" style="width: 48%;">Alpha (0)</button>
+                    </div>
+                    <button id="bg-color">Color Tint (Normal)</button>
+
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Grid Options</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="grid-visibility" style="width: 48%;">Grid (On)</button>
+                        <button id="canvas-ratio" style="width: 48%;">Ratio (16:9)</button>
+                    </div>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="line-width" style="width: 31%;">Width (0)</button>
+                        <button id="line-color" style="width: 31%;">Color (0)</button>
+                        <button id="line-alpha" style="width: 31%;">Alpha (0)</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Widget Options</label>
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button id="draggable" style="width: 48%;">Draggable (On)</button>
+                        <button id="reset-divs" style="width: 48%;">Original Layout</button>
+                    </div>
+                </div>
+
+                <div class="section-div">
+                    <label class="text-labeldiv">Input and Output of Data</label>
+                    <button id="save">Save JSON Project</button>
+                    <label for="load" class="file-label">Load JSON Project</label>
+                    <input type="file" id="load" />
+                    <label for="loadProtoJSON" class="file-label">Load Prototype Obj</label>
+                    <input type="file" id="loadProtoJSON" />
+                </div>
+
+            </div>
+        </div>
+
+        <div id="canvas-container">
+            <p id='canvas-info'>{ (0,0) , (0,0) }</p>
+        </div>
+
+        <script type=module src="index.js"></script>
+
+
+    </body>
+
+    </html>

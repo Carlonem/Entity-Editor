@@ -1,0 +1,28 @@
+const version = "KEiiPadH9OebCF3P874L2E3bmPPdlB";
+const contentToCache = [
+  "COPYING.md",
+  "EE-Frame/Core/BackgroundScene.js",
+  "EE-Frame/Core/MainScene.js",
+  "EE-Frame/Core/WidgetsCtrl.js",
+  "EE-Frame/index.css",
+  "EE-Frame/index.html",
+  "EE-Frame/index.js",
+  "EE-Frame/lib/phaser.js",
+  "Examples/One.json",
+  "Favicon/android-chrome-192x192.png",
+  "Favicon/android-chrome-512x512.png",
+  "Favicon/apple-touch-icon.png",
+  "Favicon/favicon-16x16.png",
+  "Favicon/favicon-32x32.png",
+  "Favicon/favicon.ico",
+  "README.md",
+  "Screenshots/screenshot1.webp",
+  "Screenshots/screenshot2.webp",
+  "Screenshots/screenshot3.webp",
+  "Screenshots/screenshot4.webp",
+  "Screenshots/screenshot5.webp",
+  "index.html",
+  "register.js",
+  "service-worker.js",
+  "site.webmanifest"
+];

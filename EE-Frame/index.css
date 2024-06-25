@@ -1,0 +1,243 @@
+/* Estilos principais */
+:root {
+    --background-color-dark: #2d2d2d;
+    --background-color-darker: #1d1d1d;
+    --text-color-dark: #333;
+    --text-color-light: #fff;
+    --scrollbar-thumb-color: #555;
+    --scrollbar-thumb-hover-color: #007bff;
+    --border-color: #444;
+    --button-background: #007bff;
+    --button-hover-background: #0056b3;
+    --button-active-background: #004494;
+    --input-background: #3d3d3d;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+    overflow: hidden; /* Removendo barras de rolagem globais */
+}
+
+#ui {
+    width: 350px;
+    background: var(--background-color-dark);
+    color: var(--text-color-light);
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    overflow-y: auto;
+    height: 100vh; /* Garantindo que a altura da UI seja a altura total da janela */
+}
+
+#ui::-webkit-scrollbar {
+    width: 4px;
+}
+
+#ui::-webkit-scrollbar-track {
+    background: var(--background-color-darker);
+}
+
+#ui::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 5px;
+}
+
+#ui::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+}
+
+#ui h1 {
+    font-size: 26px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+label,
+select,
+input,
+textarea,
+button {
+    width: 100%;
+    margin-bottom: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input,
+select,
+textarea {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--input-background);
+    color: var(--text-color-light);
+}
+
+textarea {
+    min-height: 23em;
+}
+
+button,
+.file-label {
+    padding: 10px;
+    background: var(--button-background);
+    color: var(--text-color-light);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: center;
+    display: block;
+}
+
+button:hover,
+.file-label:hover {
+    background: var(--button-hover-background);
+}
+
+button:active,
+.file-label:active {
+    background: var(--button-active-background);
+}
+
+button:focus,
+.file-label:focus {
+    outline: none;
+}
+
+#load,
+#background-load,
+#loadProtoJSON {
+    display: none;
+}
+
+#canvas-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background: var(--background-color-darker);
+    overflow: auto; /* Adicionando overflow: auto para ativar as barras de rolagem somente quando necessário */
+    transform: scale(1);
+    transform-origin: 0 0;
+}
+
+#canvas-container p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px;    
+    z-index: 1; /* Garantir que o <p> fique acima do canvas */
+}
+
+/* Estilos personalizados para as barras de rolagem do canvas-container */
+#canvas-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#canvas-container::-webkit-scrollbar-track {
+    background: var(--background-color-darker);
+}
+
+#canvas-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 5px;
+}
+
+#canvas-container::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+}
+
+canvas {
+    display: block;
+    border: 2px solid var(--scrollbar-thumb-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.canvas-16-9-portrait {
+    width: 52.36875vh;
+    height: 93.1vh;
+}
+
+/* Canvas 16:9 */
+.canvas-16-9 {
+    width: 70vw;
+    height: 39.375vw;
+}
+
+@media (min-width: 1440px) {
+    .canvas-16-9 {
+        width: 79vw;
+        height: 44.4375vw;
+    }
+}
+
+/* Canvas 4:3 */
+.canvas-4-3-portrait {
+    width: 69.3vh;
+    height: 92.4vh;
+}
+
+/* Canvas 4:3 */
+.canvas-4-3 {
+    width: 56.7vw;
+    height: 42.525vw;
+}
+
+@media (min-width: 1366px) {
+    .canvas-4-3 {
+        width: 63vw;
+        height: 47.25vw;
+    }
+}
+
+.json-viewer::-webkit-scrollbar {
+    width: 10px;
+}
+
+.json-viewer::-webkit-scrollbar-track {
+    background: var(--background-color-darker);
+}
+
+.json-viewer::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 5px;
+}
+
+.json-viewer::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+}
+
+.section-div {
+    background: var(--input-background);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color-light);
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.section-boot-div {
+    margin-bottom: 15px;
+}
+
+.text-labeldiv {
+    display: block;
+    padding-top: 5px;
+    padding-left: 3px;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}

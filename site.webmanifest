@@ -1,0 +1,81 @@
+{
+    "name": "Entity Editor",
+    "short_name": "Editor",
+    "start_url": "/Entity-Editor/",
+    "id": "index.html",
+    "description": "A minimalist entity editor for Phaser.io. Currently in pre-alpha stage.",
+    "display": "fullscreen",
+    "theme_color": "#2d2d2d",
+    "background_color": "#1d1d1d",
+    "scope": "/Entity-Editor/",
+    "icons": [
+        {
+            "src": "Favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "Favicon/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "Favicon/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "Favicon/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "Favicon/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "Favicon/favicon.ico",
+            "sizes": "48x48",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "Screenshots/screenshot1.webp",
+            "sizes": "1936x1074",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "Homescreen of Awesome App"
+        },
+        {
+            "src": "Screenshots/screenshot2.webp",
+            "sizes": "1936x1074",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "App in landscape mode. Ratio (16:9)"
+        },
+        {
+            "src": "Screenshots/screenshot3.webp",
+            "sizes": "1936x1074",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "App in portrait mode. Ratio (16:9)"
+        },
+        {
+            "src": "Screenshots/screenshot4.webp",
+            "sizes": "1936x1074",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "App in landscape mode. Ratio (4:3)"
+        },
+        {
+            "src": "Screenshots/screenshot5.webp",
+            "sizes": "1936x1074",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "Here are some examples of entities (zone and path)."
+        }
+    ]
+}

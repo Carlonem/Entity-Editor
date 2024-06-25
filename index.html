@@ -1,0 +1,63 @@
+<!--
+  This file is part of Entity Editor - EE.
+
+  Entity Editor - EE is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  any later version.
+
+  Entity Editor - EE is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with Entity Editor - EE. If not, see <http://www.gnu.org/licenses/>.
+
+  Author: Carlonem <carlonem.dev@gmail.com>
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entity Editor</title>
+
+    <!-- Tags de ativação do PWA -->
+    <meta name="theme-color" content="#2d2d2d">
+    <link rel="icon" sizes="192x192" href="Favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="Favicon/android-chrome-512x512.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="Favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="Favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="Favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Favicon/favicon-32x32.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- Modulo de ativação do PWA -->
+    <script type=module  src="./register.js"> </script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <iframe src="./EE-Frame/index.html"></iframe>
+</body>
+
+</html>
