@@ -25,8 +25,9 @@ const appName = 'Entity-Editor-Cache'
 const state = 'PA-S9';
 
 // Conteúdo que vai para o cache
-const version = "IdJXu0VBMc1MYiZ6V5E0pT4rKNma3E";
+const version = "65aOElt7S1WUDQBhTStCUAWXE7m3w0";
 const contentToCache = [
+  "CODE_OF_CONDUCT.md",
   "CONTRIBUTING.md",
   "COPYING.md",
   "EE-Frame/Core/BackgroundScene.js",
