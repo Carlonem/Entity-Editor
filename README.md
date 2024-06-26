@@ -97,8 +97,11 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 - [x] Move the screen.
 - [x] Handle fixed and movable elements.
 - [x] Manage Path and Zone types.
-- [ ] Skip drawing off-screen elements.
+- [ ] Skip drawing off-screen elements -> ?
 - [ ] Add orthographic, normal, and isometric cell types.
+- [x] Refactor drawGrid function family.
+- [ ] Refactor: drawGridLines -> save and restore canvas state.
+- [ ] Add appropriate image view layer -> Entity Texture.
 
 #### UI:
 - [x] Ensure `{"width": 0,"height": 0}` is multiple of grid size.

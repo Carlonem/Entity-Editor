@@ -79,6 +79,30 @@ export class MainScene extends Phaser.Scene {
         this.moveViewMultiplierIndex = 0;
         this.moveViewMultiplierList = [1, 5, 10, 15, 20, 30, 40];
 
+        // offset do Canvas
+        this.offsetX = 0;
+        this.offsetY = 0;
+
+        // Obj de Entrada de Dados nas Func. drawgrid()
+        this.inData = {
+            x: undefined,
+            y: undefined,
+            width: undefined,
+            height: undefined,
+            rotation: undefined,
+            scaleX: undefined,
+            scaleY: undefined,
+            centerX: undefined,
+            centerY: undefined,
+            visible: undefined,
+            alpha: undefined,
+            frameX: undefined,
+            frameY: undefined,
+            pivotX: undefined,
+            pivotY: undefined,
+            lineColor: undefined
+        }
+
     }
 
     //  ============================================================================
@@ -463,12 +487,23 @@ export class MainScene extends Phaser.Scene {
     //  drawGrid => Main Function Of The Class
     //  ============================================================================
     drawGrid() {
+
+        // Calcula o deslocamento baseado na posição da visualização
+        this.offsetX = this.viewPosition[this.currentWorkspace].x;
+        this.offsetY = this.viewPosition[this.currentWorkspace].y;
+
+        
+        // Desenhando Entidades
         this.drawGridLines();
         this.drawGridEntity();
+
+        // Desenhando Seletores e Indicadores
+        this.drawEntityDots();
         this.drawSelectionDot();
     }
 
     drawGridLines() {
+
         // Estilo da Grade
         this.graphics.clear();
         if (!this.activeGrid) {
@@ -481,13 +516,12 @@ export class MainScene extends Phaser.Scene {
             this.graphics.lineStyle(1, 0x000000, 0);
         }
 
-        // Calcula o deslocamento baseado na posição da visualização
-        const offsetX = this.viewPosition[this.currentWorkspace].x;
-        const offsetY = this.viewPosition[this.currentWorkspace].y;
+        // Parando: Caso -> Grid Desativada
+        if (this.activeGrid) return null;
 
         // Desenhando a Grade
-        for (let x = offsetX % this.gridSize; x < this.game.config.width; x += this.gridSize) {
-            for (let y = offsetY % this.gridSize; y < this.game.config.height; y += this.gridSize) {
+        for (let x = this.offsetX % this.gridSize; x < this.game.config.width; x += this.gridSize) {
+            for (let y = this.offsetY % this.gridSize; y < this.game.config.height; y += this.gridSize) {
                 this.graphics.fillStyle(0x000000, 0);
                 this.graphics.fillRect(x, y, this.gridSize, this.gridSize);
                 this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
@@ -496,87 +530,134 @@ export class MainScene extends Phaser.Scene {
     }
 
     drawGridEntity() {
-        const offsetX = this.viewPosition[this.currentWorkspace].x;
-        const offsetY = this.viewPosition[this.currentWorkspace].y;
 
+        // PERIGO: Loop Principal do Editor -> Lopp de Entidades
         Object.values(this.gridData).forEach(entity => {
+
             // Resetar o estilo de linha antes de desenhar cada entidade
             this.graphics.lineStyle(0, 0x000000, 0);
 
+            // Seletor: Entidades -> Tipo de Entidade
             if (entity.drawType === 'zone') {
-                this.drawZoneEntity(entity, offsetX, offsetY);
+
+                // Coletor de Dados de Input Salvos Entrando em Ação
+                this.getObjInputZoneData(entity);
+
+                // Desenhando na Tela
+                this.drawZoneEntity(entity);
+
             } else if (entity.drawType === 'path') {
-                this.drawPathEntity(entity, offsetX, offsetY);
+
+                // Coletor de Dados de Input Salvos Entrando em Ação
+                this.getObjInputPathData(entity);
+
+                // Desenhando na Tela
+                this.drawPathEntity(entity);
             }
         });
     }
 
-    drawZoneEntity(entity, offsetX, offsetY) {
-        const x = entity.data.x - offsetX;
-        const y = entity.data.y - offsetY;
-        let width = entity.data.width;
-        let height = entity.data.height;
-        const rotation = entity.data.rotation || 0;
-        const scaleX = entity.data.scaleX || 1;
-        const scaleY = entity.data.scaleY || 1;
-        const centerX = entity.data.centerX !== undefined ? entity.data.centerX : 0.5;
-        const centerY = entity.data.centerY !== undefined ? entity.data.centerY : 0.5;
-        const visible = entity.data.visible !== undefined ? entity.data.visible : true;
-        const alpha = entity.data.alpha !== undefined ? entity.data.alpha : 1;
-        const frameX = entity.data.frameX || 1;
-        const frameY = entity.data.frameY || 1;
+    getObjInputZoneData(entity) {
 
-        width /= frameX;
-        height /= frameY;
+        // Imput: Obj. de "data" -> Forma para "zone"
+        this.inData.x = entity.data.x - this.offsetX;
+        this.inData.y = entity.data.y - this.offsetY;
+        this.inData.width = entity.data.width;
+        this.inData.height = entity.data.height;
+        this.inData.rotation = entity.data.rotation || 0;
+        this.inData.scaleX = entity.data.scaleX || 1;
+        this.inData.scaleY = entity.data.scaleY || 1;
+        this.inData.centerX = entity.data.centerX !== undefined ? entity.data.centerX : 0.5;
+        this.inData.centerY = entity.data.centerY !== undefined ? entity.data.centerY : 0.5;
+        this.inData.visible = entity.data.visible !== undefined ? entity.data.visible : true;
+        this.inData.alpha = entity.data.alpha !== undefined ? entity.data.alpha : 1;
+        this.inData.frameX = entity.data.frameX || 1;
+        this.inData.frameY = entity.data.frameY || 1;
 
-        const pivotX = x + centerX * width;
-        const pivotY = y + centerY * height;
+        return null
+    }
 
-        if (visible) {
+    drawZoneEntity(entity) {
+
+        this.inData.width /= this.inData.frameX;
+        this.inData.height /= this.inData.frameY;
+
+        this.inData.pivotX = this.inData.x + this.inData.centerX * this.inData.width;
+        this.inData.pivotY = this.inData.y + this.inData.centerY * this.inData.height;
+
+        if (this.inData.visible) {
             this.graphics.save();
-            this.graphics.translateCanvas(pivotX, pivotY);
-            this.graphics.scaleCanvas(scaleX, scaleY);
-            this.graphics.rotateCanvas(rotation);
-            this.graphics.fillStyle(entity.type, alpha);
-            this.graphics.fillRect(-centerX * width, -centerY * height, width, height);
-            this.graphics.strokeRect(-centerX * width, -centerY * height, width, height);
+            this.graphics.translateCanvas(this.inData.pivotX, this.inData.pivotY);
+            this.graphics.scaleCanvas(this.inData.scaleX, this.inData.scaleY);
+            this.graphics.rotateCanvas(this.inData.rotation);
+            this.graphics.fillStyle(entity.type, this.inData.alpha);
+            this.graphics.fillRect(
+                -this.inData.centerX * this.inData.width,
+                -this.inData.centerY * this.inData.height,
+                this.inData.width,
+                this.inData.height
+            );
+            this.graphics.strokeRect(
+                -this.inData.centerX * this.inData.width,
+                -this.inData.centerY * this.inData.height,
+                this.inData.width,
+                this.inData.height
+            );
             this.graphics.restore();
         }
 
         this.graphics.save();
-        this.graphics.translateCanvas(pivotX, pivotY);
+        this.graphics.translateCanvas(this.inData.pivotX, this.inData.pivotY);
         this.graphics.fillStyle(0xff0000, 1);
         this.graphics.fillCircle(0, 0, 2);
         this.graphics.restore();
     }
 
-    drawPathEntity(entity, offsetX, offsetY) {
-        const x = entity.data.x;
-        const y = entity.data.y;
-        const rotation = entity.data.rotation || 0;
-        const scaleX = entity.data.scaleX || 1;
-        const scaleY = entity.data.scaleY || 1;
-        const visible = entity.data.visible !== undefined ? entity.data.visible : true;
-        const alpha = entity.data.alpha !== undefined ? entity.data.alpha : 1;
-        const lineColor = entity.type;
+    getObjInputPathData(entity) {
 
-        const pivotX = x;
-        const pivotY = y;
+        // Imput: Obj. de "data" -> Forma para "path"
+        this.inData.x = entity.data.x;
+        this.inData.y = entity.data.y;
+        this.inData.rotation = entity.data.rotation || 0;
+        this.inData.scaleX = entity.data.scaleX || 1;
+        this.inData.scaleY = entity.data.scaleY || 1;
+        this.inData.visible = entity.data.visible !== undefined ? entity.data.visible : true;
+        this.inData.alpha = entity.data.alpha !== undefined ? entity.data.alpha : 1;
+        this.inData.lineColor = entity.type;
 
-        // Add the origin point p0
-        entity.data.p0 = [pivotX, pivotY];
+        return null
+    }
 
-        if (visible) {
+    drawPathEntity(entity) {
+
+        this.inData.pivotX = this.inData.x;
+        this.inData.pivotY = this.inData.y;
+
+        // Adicionando ponto P0 a origem
+        entity.data.p0 = [
+            this.inData.pivotX,
+            this.inData.pivotY
+        ];
+
+        if (this.inData.visible) {
             this.graphics.save();
 
-            // Translate to p0
-            this.graphics.translateCanvas(pivotX - offsetX, pivotY - offsetY);
-            this.graphics.scaleCanvas(scaleX, scaleY);
-            this.graphics.rotateCanvas(rotation);
-            this.graphics.lineStyle(2, lineColor, alpha);
+            // Transladando o ponto p0
+            this.graphics.translateCanvas(
+                this.inData.pivotX - this.offsetX,
+                this.inData.pivotY - this.offsetY
+            );
+            this.graphics.scaleCanvas(
+                this.inData.scaleX,
+                this.inData.scaleY
+            );
+            this.graphics.rotateCanvas(this.inData.rotation);
+            this.graphics.lineStyle(2, this.inData.lineColor, this.inData.alpha);
 
-            // Starting from p0, which is now [0, 0] after translation
+            // O Ponto p0 agora é zer0 [0,0] <- Muito cuidado com isso!
             let prevPoint = [0, 0];
+
+            // Loop de Pontos
             Object.keys(entity.data).forEach(key => {
                 if (key.startsWith('p') && key !== 'p0') {
                     const point = entity.data[key];
@@ -586,14 +667,13 @@ export class MainScene extends Phaser.Scene {
                     this.graphics.lineTo(point[0], point[1]);
                     this.graphics.strokePath();
 
-                    // Draw red point at current position
+                    // Desenhando o Ponto Vermelho no Lugar do Ponto
                     this.graphics.fillStyle(0xff0000, 1);
                     this.graphics.fillCircle(point[0], point[1], 2);
 
                     prevPoint = point;
                 }
             });
-
             this.graphics.restore();
         }
 
@@ -601,33 +681,27 @@ export class MainScene extends Phaser.Scene {
         this.graphics.lineStyle(0, 0x000000, 0);
     }
 
-    drawSelectionDot() {
-        const offsetX = this.viewPosition[this.currentWorkspace].x;
-        const offsetY = this.viewPosition[this.currentWorkspace].y;
-
-        // Desenhando o quadrado de seleção (amarelo) e os quadrados vermelhos
-        for (let x = offsetX % this.gridSize; x < this.game.config.width; x += this.gridSize) {
-            for (let y = offsetY % this.gridSize; y < this.game.config.height; y += this.gridSize) {
-                const key = `${x + offsetX},${y + offsetY}`;
-                const isSelected = key === this.selectedGridKey;
-                const entity = Object.values(this.gridData).find(entity => entity.data.x === x + offsetX && entity.data.y === y + offsetY);
-                const hasData = entity;
-
-                if (isSelected) {
-                    this.graphics.fillStyle(0xffff99, 1);
-                    this.graphics.fillRect(x, y, this.gridSize, this.gridSize);
-                    this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
-                }
-
-                if (hasData && !isSelected) {
-                    this.graphics.fillStyle(0xff0000, 1);
-                    this.graphics.fillRect(entity.data.x - offsetX, entity.data.y - offsetY, this.gridSize, this.gridSize);
-                    this.graphics.strokeRect(entity.data.x - offsetX, entity.data.y - offsetY, this.gridSize, this.gridSize);
-                }
-            }
-        }
+    drawEntityDots() {
+        Object.values(this.gridData).forEach(entity => {
+            const x = entity.data.x - this.viewPosition[this.currentWorkspace].x;
+            const y = entity.data.y - this.viewPosition[this.currentWorkspace].y;
+            this.graphics.fillStyle(0xff0000, 1); // Red color for entities
+            this.graphics.fillRect(x, y, this.gridSize, this.gridSize);
+            this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
+        });
     }
 
+    drawSelectionDot() {
+        if (this.selectedGridKey) {
+            const [gridX, gridY] = this.selectedGridKey.split(',').map(Number);
+            const x = gridX - this.viewPosition[this.currentWorkspace].x;
+            const y = gridY - this.viewPosition[this.currentWorkspace].y;
+            this.graphics.fillStyle(0xffff99, 1); // Yellow color for selection
+            this.graphics.fillRect(x, y, this.gridSize, this.gridSize);
+            this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
+        }
+    };
+    
     //  ============================================================================
     //  Lidando Com Eventos de Click
     //  ============================================================================
