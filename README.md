@@ -4,7 +4,7 @@
 
 This project is an entity editor built using Phaser. It provides a flexible interface to create and manage entities within a canvas. Below are the main functionalities and features of the project.
 
-This editor was created primarily for rapid prototyping of strategy games, faux 3D games (PS1 pre-render style), and motion graphics. It is not intended for creating the games themselves, but for generating the .json files that they consume.
+This editor was created primarily for rapid prototyping of strategy games, faux 3D games (PS1 pre-render style), and pre-rendered scenes. It is not intended for creating the games themselves, but for generating the .json files that they consume.
 
 Note that the generated file contains a base64 image for each entity. The purpose of this is to use images as prototypes and avoid using graphics and images simultaneously during development.
 
@@ -87,6 +87,7 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 
 #### Pre-Boot:
 - [x] Add Phaser config for FPS, WebGL and Canvas, and Screen Mode.
+- [ ] Directly read grid size of an integer.
 
 #### drawGrid():
 - [x] View and change the rotation and scale center (red dot).
@@ -102,6 +103,7 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 - [x] Refactor drawGrid function family.
 - [ ] Refactor: drawGridLines -> save and restore canvas state.
 - [ ] Add appropriate image view layer -> Entity Texture.
+- [ ] Problem: selection square is too small with small grids.
 
 #### UI:
 - [x] Ensure `{"width": 0,"height": 0}` is multiple of grid size.
@@ -114,19 +116,25 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 - [x] Move UI elements.
 - [ ] Add help information for UI elements.
 - [ ] Add index.
-- [ ] Add individual entity state animations.
+- [ ] Add individual entity state for animations.
 
 #### UI Visualization Options:
 - [x] Toggle grid visibility.
 - [x] Set grid ratio (16:9 or 4:3).
 - [x] Control line style (width, color, alpha).
 - [x] Control background properties (alpha, origin, scale).
+- [ ] Change grid size after boot.
 - [ ] Toggle info/Debug visibility.
 - [ ] Fullscreen mode.
 - [ ] Reload page.
 
 #### Keyboard Controls:
 - [ ] Implement keyboard controls.
+
+#### Urgent:
+- [x] Fix function performance issue in drawGridEntity().
+- [x] Fix function performance issue in drawSelectionDot().
+- [ ] Fix function performance issue in drawGridLines().
 
 #### Code Review:
 - [ ] Code review PA-S9 -> A-S1.
