@@ -1,5 +1,21 @@
 # Entity Editor - EE 
 
+**Preliminary Testing Notice**
+
+If you are viewing this repository by any chance, please do not share it publicly yet. This project is currently set up for preliminary testing and is not ready for public release. However, since you are here, feel free to explore and make yourself at home! 
+
+**Testing Phase**
+  
+  This repository is in its early stages and undergoing active development and testing. Features and functionality are subject to change.
+
+**Feedback Welcome**
+
+  While the project is not ready for widespread sharing, we welcome any feedback you may have. Your insights can help improve the project during this critical phase.
+
+Thank you for your understanding and cooperation!
+
+
+
 ## Entity Editor for Phaser
 
 This project is an entity editor built using Phaser. It provides a flexible interface to create and manage entities within a canvas. Below are the main functionalities and features of the project.
