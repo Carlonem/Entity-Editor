@@ -114,10 +114,10 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 - [x] Move the screen.
 - [x] Handle fixed and movable elements.
 - [x] Manage Path and Zone types.
-- [ ] Skip drawing off-screen elements -> ?
+- [ ] Skip drawing off-screen elements. -> ?
 - [ ] Add orthographic, normal, and isometric cell types.
 - [x] Refactor drawGrid function family.
-- [ ] Refactor: drawGridLines -> save and restore canvas state.
+- [x] Refactor: drawGridLines -> new Phaser Scene: GridLines.
 - [ ] Add appropriate image view layer -> Entity Texture.
 - [ ] Problem: selection square is too small with small grids.
 
@@ -128,21 +128,26 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 - [x] Add Save slots [1 ... 10].
 - [x] Add more resolution options, line width, and ratio types.
 - [x] Implement Fast Save and Load.
-- [ ] Load appropriate image for entities.
+- [ ] Load appropriate image for entities <- Phaser texture.
 - [x] Move UI elements.
 - [ ] Add help information for UI elements.
 - [ ] Add index.
 - [ ] Add individual entity state for animations.
+- [ ] Add workspace overlay instance <- Delicate change.
 
 #### UI Visualization Options:
 - [x] Toggle grid visibility.
 - [x] Set grid ratio (16:9 or 4:3).
 - [x] Control line style (width, color, alpha).
 - [x] Control background properties (alpha, origin, scale).
-- [ ] Change grid size after boot.
+- [ ] Change grid size after boot. <- ?
 - [ ] Toggle info/Debug visibility.
 - [ ] Fullscreen mode.
 - [ ] Reload page.
+
+#### Save and Load:
+- [ ] Add metaData to Project.json file.
+- [ ] Block load different gridSize to new gridSize.
 
 #### Keyboard Controls:
 - [ ] Implement keyboard controls.
@@ -150,10 +155,10 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 #### Urgent:
 - [x] Fix function performance issue in drawGridEntity().
 - [x] Fix function performance issue in drawSelectionDot().
-- [ ] Fix function performance issue in drawGridLines().
+- [x] Fix function performance issue in drawGridLines().
 
 #### Code Review:
-- [ ] Code review PA-S9 -> A-S1.
+- [ ] Code review PA-S9 -> A-S1 (1/n).
 - [ ] ENTER: **Version: Alpha A-S1**
 
 ---

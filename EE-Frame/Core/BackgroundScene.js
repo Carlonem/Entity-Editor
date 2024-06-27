@@ -53,6 +53,7 @@ export class BackgroundScene extends Phaser.Scene {
 
         this.unlockButtons();
         this.updateInfo();
+        console.log('[BackgroundScene]', { 'BackgroundScene': this })
     }
 
     mainEvent() {
@@ -117,8 +118,13 @@ export class BackgroundScene extends Phaser.Scene {
 
     unlockButtons() {
         const buttons = ['bg-scale', 'bg-alpha', 'bg-color'];
+
+        // Canvas Não Suporta Variação de Cor
+        !this.game.backgroundColor ? buttons.pop() :  null;
+
         buttons.forEach(buttonId => {
             const button = document.getElementById(buttonId);
+            
             // Restaura o estilo original a partir das variáveis CSS
             button.style.backgroundColor = 'var(--button-background)';
             button.style.pointerEvents = 'auto';
@@ -126,6 +132,6 @@ export class BackgroundScene extends Phaser.Scene {
     }
 
     update() {
-        // Atualizar a cena se necessário
+        // Evitar a todo custo!
     }
 }

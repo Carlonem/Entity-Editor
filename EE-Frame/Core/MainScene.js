@@ -46,10 +46,10 @@ export class MainScene extends Phaser.Scene {
             'layer-six', 'layer-seven', 'layer-eight', 'layer-nine', 'layer-ten'
         ];
         this.copyButtonIds = [
-            'c0', 'c1', 'c2', 'c3', 'c4',  // 'c5', 'c6', 'c7', 'c8', 'c9'
+            'c0', 'c1', 'c2', 'c3', 'c4',
         ];
         this.stateButtonIds = [
-            's0', 's1', 's2', 's3', 's4',   // 's5', 's6', 's7', 's8', 's9'
+            's0', 's1', 's2', 's3', 's4',
         ];
         this.gridDataHolder = {};
         this.gridDataOld = {};
@@ -58,14 +58,6 @@ export class MainScene extends Phaser.Scene {
         this.currentWorkspace = '';
         this.currentCopyIslot = '';
         this.currentStateIslot = '';
-
-        this.lineWidth = [0.5, 1.0, 1.5, 2.0, 2.5];
-        this.lineColor = ['0xffffff', '0xE2A3AD', '0xBAF4B4', '0xF3F4B4', '0xD9B4F4'];
-        this.lineAlpha = [0.1, 0.3, 0.5, 0.7, 0.9];
-
-        this.resolution = document.getElementById('canvas-resolution');
-        this.resolutionData = this.resolution.value.split('x');
-        this.currentLineInfo = [this.resolutionData[3], this.resolutionData[4], this.resolutionData[5]];
 
         // Novo estado de arraste
         this.isDragging = false;
@@ -161,21 +153,15 @@ export class MainScene extends Phaser.Scene {
         document.getElementById('move-view-reset').addEventListener('click', this.moveView.bind(this, 'reset'));
         document.getElementById('move-view-multiplier').addEventListener('click', this.moveViewMultiplier.bind(this));
 
-        // Frescura
-        document.getElementById('grid-visibility').addEventListener('click', this.changeGridVisibilite.bind(this));
-        document.getElementById('line-width').addEventListener('click', this.lineWidthButton.bind(this));
-        document.getElementById('line-color').addEventListener('click', this.lineColorButton.bind(this));
-        document.getElementById('line-alpha').addEventListener('click', this.lineAlphaButton.bind(this));
-
         // Boot Scene!
         this.initializeButtons();
         this.initializeCopyIslotButtons();
         this.initializeStateIslotButtons();
         this.drawGrid();
-        this.updateLineInfo();
         this.nullState(true)
 
         this.initCustomCamera();
+        console.log('[MainScene]', { 'MainScene': this });
     }
 
     update() {
@@ -226,11 +212,14 @@ export class MainScene extends Phaser.Scene {
         const newName = `Multiplier (${this.moveViewMultiplierList[this.moveViewMultiplierIndex]}x)`;
         data.textContent = newName;
     }
-
-    // Função para mover a área visível
+    
     moveViewCmd(direction) {
+
+        // Função para mover a área visível
         const step = this.gridSize;
         const multiplier = this.moveViewMultiplierList[this.moveViewMultiplierIndex];
+
+        // Movendo O Canvas!
         switch (direction) {
             case 'up':
                 this.viewPosition[this.currentWorkspace].y -= multiplier * step;
@@ -257,8 +246,6 @@ export class MainScene extends Phaser.Scene {
     repositionPinnedEntities() {
         const offsetX = this.viewPosition[this.currentWorkspace].x;
         const offsetY = this.viewPosition[this.currentWorkspace].y;
-
-        //console.log(this.viewPosition)
 
         Object.values(this.gridData).forEach(entity => {
             if (entity.data.pinned) {
@@ -339,7 +326,7 @@ export class MainScene extends Phaser.Scene {
             }
         });
 
-        // Botão Padrão de Camada da Grdi
+        // Botão Padrão de Camada da Grid
         const baseLayer = document.getElementById(this.copyButtonIds[0]);
         baseLayer.style.backgroundColor = '#007bff';
         this.currentCopyIslot = this.copyButtonIds[0];
@@ -492,41 +479,15 @@ export class MainScene extends Phaser.Scene {
         this.offsetX = this.viewPosition[this.currentWorkspace].x;
         this.offsetY = this.viewPosition[this.currentWorkspace].y;
 
-        
+        // Limpando a Tela
+        this.graphics.clear();
+
         // Desenhando Entidades
-        this.drawGridLines();
         this.drawGridEntity();
 
         // Desenhando Seletores e Indicadores
         this.drawEntityDots();
         this.drawSelectionDot();
-    }
-
-    drawGridLines() {
-
-        // Estilo da Grade
-        this.graphics.clear();
-        if (!this.activeGrid) {
-            this.graphics.lineStyle(
-                this.lineWidth[this.currentLineInfo[0]],
-                this.lineColor[this.currentLineInfo[1]],
-                this.lineAlpha[this.currentLineInfo[2]]
-            );
-        } else {
-            this.graphics.lineStyle(1, 0x000000, 0);
-        }
-
-        // Parando: Caso -> Grid Desativada
-        if (this.activeGrid) return null;
-
-        // Desenhando a Grade
-        for (let x = this.offsetX % this.gridSize; x < this.game.config.width; x += this.gridSize) {
-            for (let y = this.offsetY % this.gridSize; y < this.game.config.height; y += this.gridSize) {
-                this.graphics.fillStyle(0x000000, 0);
-                this.graphics.fillRect(x, y, this.gridSize, this.gridSize);
-                this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
-            }
-        }
     }
 
     drawGridEntity() {
@@ -538,21 +499,26 @@ export class MainScene extends Phaser.Scene {
             this.graphics.lineStyle(0, 0x000000, 0);
 
             // Seletor: Entidades -> Tipo de Entidade
-            if (entity.drawType === 'zone') {
+            switch (entity.drawType) {
+                case 'zone':
+                    // Coletor de Dados de Input Salvos Entrando em Ação
+                    this.getObjInputZoneData(entity);
 
-                // Coletor de Dados de Input Salvos Entrando em Ação
-                this.getObjInputZoneData(entity);
+                    // Desenhando na Tela
+                    this.drawZoneEntity(entity);
+                    break;
 
-                // Desenhando na Tela
-                this.drawZoneEntity(entity);
+                case 'path':
+                    // Coletor de Dados de Input Salvos Entrando em Ação
+                    this.getObjInputPathData(entity);
 
-            } else if (entity.drawType === 'path') {
+                    // Desenhando na Tela
+                    this.drawPathEntity(entity);
+                    break;
 
-                // Coletor de Dados de Input Salvos Entrando em Ação
-                this.getObjInputPathData(entity);
-
-                // Desenhando na Tela
-                this.drawPathEntity(entity);
+                default:
+                    console.log('[MainScene]', { 'Tipo de entidade desconhecido:': entity.drawType });
+                    break;
             }
         });
     }
@@ -701,7 +667,7 @@ export class MainScene extends Phaser.Scene {
             this.graphics.strokeRect(x, y, this.gridSize, this.gridSize);
         }
     };
-    
+
     //  ============================================================================
     //  Lidando Com Eventos de Click
     //  ============================================================================
@@ -1013,61 +979,4 @@ export class MainScene extends Phaser.Scene {
         this.input.on('pointermove', this.handlePointerMove, this);
         this.input.on('pointerup', this.handlePointerUp, this);
     }
-
-    //  ============================================================================
-    //  Bloco de Eventos Relacionados a Frescura
-    //  ============================================================================
-
-    lineWidthButton() {
-        this.currentLineInfo[0] >= this.lineWidth.length - 1 ? this.currentLineInfo[0] = 0 : this.currentLineInfo[0]++;
-        this.updateLineInfo();
-    }
-
-    lineColorButton() {
-        this.currentLineInfo[1] >= this.lineColor.length - 1 ? this.currentLineInfo[1] = 0 : this.currentLineInfo[1]++;
-        this.updateLineInfo();
-    }
-
-    lineAlphaButton() {
-        this.currentLineInfo[2] >= this.lineAlpha.length - 1 ? this.currentLineInfo[2] = 0 : this.currentLineInfo[2]++;
-        this.updateLineInfo();
-    }
-
-    updateLineInfo() {
-
-        // Mudando Texto da Tela
-        const lineWidthData = document.getElementById('line-width');
-        const newNameW = `Width (${this.currentLineInfo[0]})`;
-        lineWidthData.textContent = newNameW;
-
-        // Mudando Texto da Tela
-        const lineColorData = document.getElementById('line-color');
-        const newNameC = `Color (${this.currentLineInfo[1]})`;
-        lineColorData.textContent = newNameC;
-
-        // Mudando Texto da Tela
-        const lineAlphaData = document.getElementById('line-alpha');
-        const newNameA = `Alpha (${this.currentLineInfo[2]})`;
-        lineAlphaData.textContent = newNameA;
-
-        // Atualizando a Tela
-        this.drawGrid();
-    }
-
-    changeGridVisibilite() {
-
-        const gridVisibilite = document.getElementById('grid-visibility');
-        let newName = '';
-
-        // Mudando Texto da Tela
-        if (this.activeGrid) newName = 'Grid (On)';
-        else newName = 'Grid (Off)';
-
-        gridVisibilite.textContent = newName;
-        this.activeGrid = !this.activeGrid;
-
-        //Atualizando a Tela
-        this.drawGrid();
-    }
-
 }

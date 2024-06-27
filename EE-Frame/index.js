@@ -26,6 +26,7 @@
 import { MainScene } from "./Core/MainScene.js";
 import { BackgroundScene } from "./Core/BackgroundScene.js";
 import { WidgetsCtrl } from "./Core/WidgetsCtrl.js"
+import { GridLines } from "./Core/GridLines.js"
 
 // ============================================================================
 // End Of Load Event
@@ -113,13 +114,22 @@ class GameConfig {
         const resolutionData = resolution.value.split('x');
         this.gridData = gridSize.value;
 
-        if (this.orientation == 'portrait') {
-            this.config.width = parseInt(resolutionData[1]);
-            this.config.height = parseInt(resolutionData[0]);
-        } else if (this.orientation == 'landscape') {
-            this.config.width = parseInt(resolutionData[0]);
-            this.config.height = parseInt(resolutionData[1]);
-        }
+        // Tipo de Tela
+        switch (this.orientation) {
+            case 'portrait':
+                this.config.width = parseInt(resolutionData[1]);
+                this.config.height = parseInt(resolutionData[0]);
+                break;
+        
+            case 'landscape':
+                this.config.width = parseInt(resolutionData[0]);
+                this.config.height = parseInt(resolutionData[1]);
+                break;
+        
+            default:
+                console.log('Orientação desconhecida:', this.orientation);
+                break;
+        }        
 
         // Safe Mode
         this.ratio = resolutionData[2];
@@ -139,13 +149,22 @@ class GameConfig {
     startGame() {
         this.init = true;
 
-        this.config.scene = this.backgroundImage ? [BackgroundScene, MainScene] : [MainScene];
+        this.config.scene = this.backgroundImage ? [
+            BackgroundScene, GridLines, MainScene
+        ] : [
+            GridLines, MainScene
+        ];
+
         this.game = new Phaser.Game(this.config);
         this.game.cellSize = this.gridData;
         this.game.entityData = this.entityData;
 
+        // Canvas Não Suporta Variação de Cor
+        this.renderButtonIds[this.config.type] == this.renderButtonIds[1] ? this.game.backgroundColor = false : this.game.backgroundColor = true;
+
         if (this.backgroundImage) {
             this.game.scene.start('BackgroundScene', { backgroundImage: this.backgroundImage });
+            this.game.scene.start('GridLines');
         }
 
         this.game.scene.start('MainScene');
@@ -180,18 +199,33 @@ class GameConfig {
         canvas.classList.remove('canvas-16-9', 'canvas-4-3', 'canvas-16-9-portrait', 'canvas-4-3-portrait');
 
         // Adiciona a classe de proporção apropriada
-        if (this.ratio == '16:9' && this.orientation == 'landscape') {
-            canvas.classList.add('canvas-16-9');
-            newName = 'Ratio (16:9)';
-        } else if (this.ratio == '4:3' && this.orientation == 'landscape') {
-            canvas.classList.add('canvas-4-3');
-            newName = 'Ratio (4:3)';
-        } else if (this.ratio == '16:9' && this.orientation == 'portrait') {
-            canvas.classList.add('canvas-16-9-portrait');
-            newName = 'Ratio (9:16)';
-        } else if (this.ratio == '4:3' && this.orientation == 'portrait') {
-            canvas.classList.add('canvas-4-3-portrait');
-            newName = 'Ratio (3:4)';
+        let ratioOrientation = `${this.ratio}-${this.orientation}`;
+
+        // Testando String Combinada
+        switch (ratioOrientation) {
+            case '16:9-landscape':
+                canvas.classList.add('canvas-16-9');
+                newName = 'Ratio (16:9)';
+                break;
+        
+            case '4:3-landscape':
+                canvas.classList.add('canvas-4-3');
+                newName = 'Ratio (4:3)';
+                break;
+        
+            case '16:9-portrait':
+                canvas.classList.add('canvas-16-9-portrait');
+                newName = 'Ratio (9:16)';
+                break;
+        
+            case '4:3-portrait':
+                canvas.classList.add('canvas-4-3-portrait');
+                newName = 'Ratio (3:4)';
+                break;
+        
+            default:
+                console.warn('Combinação de proporção e orientação desconhecida:', ratioOrientation);
+                break;
         }
 
         document.getElementById('canvas-ratio').textContent = newName;
@@ -368,13 +402,13 @@ class GameConfig {
     }
 
     handleFpsButtonClick(buttonId) {
-    
+
         // Cores e frescura
         this.fpsButtonIds.forEach(id => {
             document.getElementById(id).style.backgroundColor = 'gray';
         });
         document.getElementById(buttonId).style.backgroundColor = '#007bff';
-        
+
         this.config.fps.target = parseInt(document.getElementById(buttonId).value);
     }
 
@@ -396,19 +430,19 @@ class GameConfig {
         const baseLayer = document.getElementById(this.renderButtonIds[0]);
         baseLayer.style.backgroundColor = '#007bff';
         const render = parseInt(document.getElementById(this.renderButtonIds[0]).value);
-        this.config.type =  render;
+        this.config.type = render;
     }
 
     handleRenderButtonClick(buttonId) {
-    
+
         // Cores e frescura
         this.renderButtonIds.forEach(id => {
             document.getElementById(id).style.backgroundColor = 'gray';
         });
         document.getElementById(buttonId).style.backgroundColor = '#007bff';
-        
+
         const render = parseInt(document.getElementById(buttonId).value);
-        this.config.type =  render;
+        this.config.type = render;
     }
 
     // ============================================================================
@@ -428,17 +462,17 @@ class GameConfig {
         // Botão Padrão
         const baseLayer = document.getElementById(this.orientationButtonIds[0]);
         baseLayer.style.backgroundColor = '#007bff';
-        this.orientation = document.getElementById(this.orientationButtonIds[0]).value;       
+        this.orientation = document.getElementById(this.orientationButtonIds[0]).value;
     }
 
     handleOrientationButtonClick(buttonId) {
-    
+
         // Cores e frescura
         this.orientationButtonIds.forEach(id => {
             document.getElementById(id).style.backgroundColor = 'gray';
         });
         document.getElementById(buttonId).style.backgroundColor = '#007bff';
-        
+
         this.orientation = document.getElementById(buttonId).value;
     }
 
