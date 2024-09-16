@@ -45,6 +45,22 @@ export class GridLines extends Phaser.Scene {
         this.offsetY = 0;
     }
 
+    /**
+     * Cria a cena de GridLines
+     *
+     * Calcula o tamanho da grid com base no tamanho da celula do jogo,
+     * e adiciona um Graphics para desenhar as linhas.
+     *
+     * Adiciona eventos para os bot oes de visibilidade, largura, cor e
+     * transpar encia das linhas.
+     *
+     * Chama a fun o  drawGridLines() para desenhar as linhas.
+     *
+     * @listens changeGridVisibilite
+     * @listens lineWidthButton
+     * @listens lineColorButton
+     * @listens lineAlphaButton
+     */
     create() {
 
         this.gridSize = parseInt(this.game.cellSize);

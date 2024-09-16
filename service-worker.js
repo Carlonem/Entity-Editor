@@ -23,6 +23,7 @@
 // Definições iniciais
 const appName = 'Entity-Editor-Cache'
 const state = 'PA-S9';
+const editorNotice = '24';
 
 // Conteúdo que vai para o cache
 const version = "65aOElt7S1WUDQBhTStCUAWXE7m3w0";
@@ -57,7 +58,7 @@ const contentToCache = [
 ];
 
 // Nome e versionador do SeviceWorker
-const CACHE_NAME = appName + '-' + state + '-V-' + version;
+const CACHE_NAME = appName + '-' + state + '-V-' + version + '-' + editorNotice;
 console.log('[Service Worker]', { "New Cache": CACHE_NAME });
 
 // Evento de instalação

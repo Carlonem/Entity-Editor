@@ -17,6 +17,9 @@
   Author: Carlonem <carlonem.dev@gmail.com>
 -->
 
+<!-- Run this PWA in http://localhost:port/Entity-Editor/ -->
+<!-- If run in another path, it will conflict with the manifest -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -24,6 +27,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entity Editor</title>
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob:; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline';">
+
+    <!-- X-Content-Type-Options -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- Referrer Policy -->
+    <meta name="referrer" content="no-referrer">
 
     <!-- Tags de ativação do PWA -->
     <meta name="theme-color" content="#2d2d2d">
@@ -36,7 +48,7 @@
     <link rel="manifest" href="site.webmanifest">
 
     <!-- Modulo de ativação do PWA -->
-    <script type=module  src="./register.js"> </script>
+    <script type=module src="./register.js"> </script>
 
     <style>
         body,
@@ -57,7 +69,7 @@
 </head>
 
 <body>
-    <iframe src="./EE-Frame/index.html"></iframe>
+    <iframe src="./EE-Frame/index.html"  sandbox="allow-scripts allow-same-origin allow-downloads"></iframe>
 </body>
 
 </html>

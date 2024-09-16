@@ -20,6 +20,15 @@
  * Author: Carlonem <carlonem.dev@gmail.com>
  */
 
+/*
+* This file is responsible for registering the service worker for the PWA.
+* A PWA (Progressive Web App) is a web application that can be installed
+* on a user's device and work offline. It requires a service worker to manage
+* the application's resources and cache.
+* The service worker is a script that runs in the background and is responsible
+* for managing the resources that the application needs to work offline.
+* It can also be used to handle push notifications and other features.
+*/
 
 // Ctes de Ativação do Pwa e de Segurança
 const PwaActive = true;

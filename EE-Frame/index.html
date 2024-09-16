@@ -17,6 +17,7 @@
   Author: Carlonem <carlonem.dev@gmail.com>
 -->
 
+<!-- The application can be run directly from here, ignoring the PWA -->
 
 <!DOCTYPE html>
     <html lang="en">
@@ -25,7 +26,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>EE-Frame/</title>
-        <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script> -->
+
+        <!-- Content Security Policy -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob:; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline';"> -->
+
         <script src='./lib/phaser.js'></script>
         <link rel="stylesheet" href="index.css" />
     </head>

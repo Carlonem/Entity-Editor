@@ -212,7 +212,7 @@ export class MainScene extends Phaser.Scene {
         const newName = `Multiplier (${this.moveViewMultiplierList[this.moveViewMultiplierIndex]}x)`;
         data.textContent = newName;
     }
-    
+
     moveViewCmd(direction) {
 
         // Função para mover a área visível
@@ -490,6 +490,16 @@ export class MainScene extends Phaser.Scene {
         this.drawSelectionDot();
     }
 
+    /**
+     * drawGridEntity() => Loop Principal do Editor
+     * 
+     * Responsável por desenhar as entidades na tela.
+     * 
+     * @param {object} entity - Objeto da entidade a ser desenhada, com informação de tipo e dados.
+     * 
+     * @todo Implementar mais tipos de entidades.
+     * @todo Implementar o desenho de entidades.
+     */
     drawGridEntity() {
 
         // PERIGO: Loop Principal do Editor -> Lopp de Entidades
@@ -647,6 +657,11 @@ export class MainScene extends Phaser.Scene {
         this.graphics.lineStyle(0, 0x000000, 0);
     }
 
+    /**
+     * Draw red dots for all entities in the scene, with a border around them.
+     * The dots are drawn at the position of the entity, and are translated based
+     * on the view position of the current workspace.
+    */
     drawEntityDots() {
         Object.values(this.gridData).forEach(entity => {
             const x = entity.data.x - this.viewPosition[this.currentWorkspace].x;
