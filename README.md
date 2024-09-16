@@ -1,8 +1,13 @@
+
 # Entity Editor - EE 
+
+<div align="justify">
 
 **Preliminary Testing Notice**
 
-If you are viewing this repository by any chance, please do not share it publicly yet. This project is currently set up for preliminary testing and is not ready for public release. However, since you are here, feel free to explore and make yourself at home! 
+
+If you are viewing this repository by any chance, <del>please do not share it publicly yet</del>. This project is currently set up for preliminary testing and is not ready for public release. However, since you are here, feel free to explore and make yourself at home! 
+
 
 **Testing Phase**
   
@@ -200,3 +205,5 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 
 
 #### This project is currently in pre-alpha and is not recommended for production use.
+
+</div>
