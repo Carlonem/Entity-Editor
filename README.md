@@ -40,18 +40,18 @@ This application is intentionally designed to be distributed and used as a PWA. 
 ### Main Features
 
 #### Canvas Configuration
-- **Canvas Size and Unit Cell Selection**: Allows choosing from various resolutions and grid sizes.
-- **Load Background**: Load a custom background image.
-- **Master FPS Control**: Set the FPS to 10, 15, 20, 30, or 60.
-- **Render Options**: Switch between WebGL and Canvas rendering.
+- **Canvas Size and Unit Cell Selection**: Choose values that match the resolution of your game's screen. Think of this directly as your game's screen.
+- **Load Background**: Load a custom background image. This is useful for transforming sketches into paths in the game.
+- **Master FPS Control**: Set the FPS to 10, 15, 20, 30, or 60. Note: Lower values perform much better for the editor.
+- **Render Options**: Switch between WebGL and Canvas rendering. 
 - **Orientation Options**: Choose between Landscape and Portrait orientations.
 
 #### Entity Management
 - **Entity Properties**: 
-  - Name
-  - Type (Zone, Path)
-  - Cluster (color-coded options)
-- **Entity Data**: Editable JSON data for each entity.
+  - Name: Unique object identifier. If left blank, a random name will be generated.
+  - Type (Zone, Path): Entities are the objects in the game, and Paths help them move around
+  - Cluster (color-coded options): Entities can be grouped together to form clusters.
+- **Entity Data**: Editable JSON data for each entity. Any data can be added here, including custom properties and values specific to your game.
 
 #### Entity Actions
 - **Save and Delete Entities**: Save or delete the current entity.
@@ -63,17 +63,17 @@ This application is intentionally designed to be distributed and used as a PWA. 
 - **Save Slots**: Separate save states for each workspace.
 
 #### Workspace Layers
-- **Isolated Workspaces**: Multiple layers to manage entities separately.
+- **Isolated Workspaces**: Multiple layers to manage entities separately. Each workspace has its own load and save functionality, allowing you to work on different projects or insstances without interference.
 - **Fast Save and Load**: Quickly save and load the entire workspace.
 
-Note: Workspaces are completely separate, and projects are saved and loaded individually per workspace.
+    **Note:** Workspaces are completely separate, and projects are saved and loaded individually per workspace.
 
 #### Canvas View Controls
-- **Move View**: Navigate the canvas view (Up, Down, Left, Right).
-- **View Multiplier**: Adjust the view multiplier for precision.
+- **Move View**: Navigate the canvas view (Up, Down, Left, Right). Think of this directly as your game's screen.
+- **View Multiplier**: Adjust the view multiplier to accelerate or decelerate the canvas movement.
 - **Reset View**: Reset the canvas view to its default state.
 
-Note: When you see entities move in the grid, it's relative movement. The displayed area of the canvas is changing. Pinned entities move with the canvas, appearing stationary due to relative movement.
+    **Note:**  When you see entities move in the grid, it's relative movement. The displayed area of the canvas is changing. Pinned entities move with the canvas, appearing stationary due to relative movement.
 
 #### Background Options
 - **Scale and Alpha**: Adjust the scale and transparency of the background.
@@ -92,9 +92,14 @@ Note: When you see entities move in the grid, it's relative movement. The displa
 - **Load Project**: Import a project from a JSON file.
 - **Load Prototype Object**: Import prototype objects from a JSON file.
 
-### Usage
+### Usage Instructions
 
-1. **Setup**: Open `index.html` in your preferred browser.
+1. **Setup**: Open `index.html` in your preferred browser. 
+
+    **Local Run Warning:** You must run this PWA in `http://localhost:port/Entity-Editor/`
+
+    If run in another path, it will conflict with the manifest;
+
 2. **Canvas Setup**: Configure the canvas size, grid, and background as desired.
 3. **Entity Management**: Create, modify, and manage entities using the provided UI.
 4. **State and Workspace Management**: Utilize save slots and layers for complex projects.
